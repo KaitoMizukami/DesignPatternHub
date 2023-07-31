@@ -33,58 +33,6 @@ type Product struct {
 	Stock    int
 }
 
-var products = []Product{
-	{
-		ID:       1,
-		Name:     "ノートパソコン",
-		Category: "電化製品",
-		Price:    80000,
-		Stock:    10,
-	},
-	{
-		ID:       2,
-		Name:     "スマートフォン",
-		Category: "電化製品",
-		Price:    60000,
-		Stock:    5,
-	},
-	{
-		ID:       3,
-		Name:     "スニーカー",
-		Category: "ファッション",
-		Price:    8000,
-		Stock:    20,
-	},
-}
-
-type Strategy interface {
-	search([]Product, string, int, int) []Product
-}
-
-type NameCategoryStrategy struct{}
-
-func (n *NameCategoryStrategy) search(products []Product, keyword string, minPrice, maxPrice int) []Product {
-	var results []Product
-	for _, product := range products {
-		if product.Category == keyword || product.Name == keyword && product.Price >= minPrice && product.Price <= maxPrice {
-			results = append(results, product)
-		}
-	}
-	return results
-}
-
-type PriceStrategy struct{}
-
-func (p *PriceStrategy) search(products []Product, keyword string, minPrice, maxPrice int) []Product {
-	var results []Product
-	for _, product := range products {
-		if product.Price >= minPrice && product.Price <= maxPrice {
-			results = append(results, product)
-		}
-	}
-	return results
-}
-
 func executeSearch(strategy Strategy, products []Product, keyword string, minPrice, maxPrice int) []Product {
 	return strategy.search(products, keyword, minPrice, maxPrice)
 }
